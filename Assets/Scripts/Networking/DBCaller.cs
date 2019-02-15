@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class DBCaller
+   public class DBCaller
     {
         public static int Login(string usern,string passw)
         {

@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{317B0155-8C49-FE47-DB32-76DE1DAE1FA7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -61,15 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\CardManager.cs" />
-    <Compile Include="Assets\Scripts\Client.cs" />
-    <Compile Include="Assets\Scripts\DBCaller.cs" />
     <Compile Include="Assets\Scripts\Extensions.cs" />
     <Compile Include="Assets\Scripts\Field.cs" />
+    <Compile Include="Assets\Scripts\Framework\Card.cs" />
+    <Compile Include="Assets\Scripts\Framework\CardManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\Player.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameObjectScripts\CardScript.cs" />
     <Compile Include="Assets\Scripts\InfissyProperties.cs" />
+    <Compile Include="Assets\Scripts\Networking\Client.cs" />
+    <Compile Include="Assets\Scripts\Networking\DBCaller.cs" />
+    <Compile Include="Assets\Scripts\Networking\Server.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Server.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/marco/Documents/Infissy/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -626,6 +630,7 @@
       <HintPath>Z:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

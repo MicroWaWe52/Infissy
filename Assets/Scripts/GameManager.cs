@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Assets.Scripts;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
         mainMenu.SetActive(false);
         serverMenu.SetActive(true);
     }
-    public void LoginButton(string userin/* temp*/,string passwin)
+   /* public void LoginButton(string userin,string passwin)
     {
         DBCaller.Utente utente=null;
         try
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
         
 
         
-    }
+    }*/
     public void ConnectToServerButton()
     {
         string hostAddress = GameObject.Find("HostInput").GetComponent<InputField>().text;
