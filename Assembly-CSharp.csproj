@@ -61,7 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Extensions.cs" />
     <Compile Include="Assets\Scripts\Field.cs" />
     <Compile Include="Assets\Scripts\Framework\Card.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Assets\Scripts\Networking\Client.cs" />
     <Compile Include="Assets\Scripts\Networking\DBCaller.cs" />
     <Compile Include="Assets\Scripts\Networking\Server.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/marco/Documents/Infissy/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

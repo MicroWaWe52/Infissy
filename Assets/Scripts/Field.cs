@@ -12,7 +12,7 @@ public class Field : MonoBehaviour
 
 
 
-    
+
     private Player remotePlayer;
 
     private GamePhase gamePhase;
@@ -21,15 +21,16 @@ public class Field : MonoBehaviour
 
 
 
-    public Player Player { get{ return player; } }
-    public Player RemotePLayer  { get { return remotePlayer; } }
-    
+    public Player Player { get { return player; } }
+    public Player RemotePLayer { get { return remotePlayer; } }
 
 
 
 
-    public Field Initalize(Client Client, Player Player, Player RemotePlayer){
-        
+
+    public Field Initalize(Client Client, Player Player, Player RemotePlayer)
+    {
+
         //?
         Instance = this;
 
@@ -37,24 +38,24 @@ public class Field : MonoBehaviour
         player = Player;
         player.Client = Client;
         remotePlayer = RemotePlayer;
-        
-        
+
+
         //?
         isHost = player.Client.isHost;
         isHostTurn = true;
         isTurn = isHost;
-    
+
 
         //Need revision, using attack phase to permit initial draw
         gamePhase = GamePhase.AttackPhase;
-
+        return null;
     }
 
 
 
-    
 
-    
+
+
 
     //testing pourpose
     public void Move(string player, int card)
@@ -68,39 +69,43 @@ public class Field : MonoBehaviour
             player.Client.Send("MOVE|" + player.Client.clientName + "|1");
         }
     }
-    
 
 
-    
-    public void ChangePhase(Card[] InteractedCards){
-        switch(gamePhase){
+
+
+    public void ChangePhase(Card[] InteractedCards)
+    {
+        switch (gamePhase)
+        {
             case GamePhase.DrawPhase:
                 player.Draw(GameInitializationValues.CardDrawNumber);
                 remotePlayer.Draw(GameInitializationValues.CardDrawNumber);
-                
-                foreach(var structureCard in player.InFieldCards[CardType.Structure]){
-                    MoveCard(structureCard,false,null);
+
+                foreach (var structureCard in player.InFieldCards[(int)CardType.Structure])
+                {
+                    MoveCard(structureCard, false, null);
                 }
                 break;
             case GamePhase.PlayPhase:
-            //PlayerInteraction
+                //PlayerInteraction
                 break;
             case GamePhase.MovePhase:
-            //PlayerInteraction
+                //PlayerInteraction
                 break;
             case GamePhase.AttackPhase:
-            //Interaction
-            //Eventual moveCard call from here
-            //
-            ChangePhase(null);
-            }
-            
+                //Interaction
+                //Eventual moveCard call from here
+                //
+                ChangePhase(null);
+                break;
+        }
+
 
 
 
     }
 
-    
+
 
 
 
@@ -217,57 +222,62 @@ public class Field : MonoBehaviour
 
     }
 
-    public void PlayCard(Card card, bool localPlayerMove){
-        
-        
+    public void PlayCard(Card card, bool localPlayerMove)
+    {
+
+
         //!Important, fix card target to avoid double affecting the host player
-        
+
         player.PlayCard(card);
-        foreach(var effect in card.SpawnEffects){
-            
-            switch(effect.EffectType){
+        foreach (var effect in card.SpawnEffects)
+        {
+
+            switch (effect.EffectType)
+            {
                 case CardEffectType.ValueIncrement:
-                player.AffectPlayer(effect.EffectValue, effect.EffectTarget);
-                break;
+                    player.AffectPlayer(effect.EffectValue, effect.EffectTarget);
+                    break;
                 case CardEffectType.PercentualIncrement:
 
-                int playerAffectedResource;
+                    int playerAffectedResource = 0;
 
 
-                switch(effect.EffectTarget){
+                    switch (effect.EffectTarget)
+                    {
 
-                    case CardEffectTarget.AllyGold:
-                                playerAffectedResource = player.Gold;
-                                break;
+                        case CardEffectTarget.AllyGold:
+                            playerAffectedResource = player.Gold;
+                            break;
 
-                            case CardEffectTarget.AllyPopulation:
-                                playerAffectedResource = player.Population;
-                                break;
+                        case CardEffectTarget.AllyPopulation:
+                            playerAffectedResource = player.Population;
+                            break;
 
-                            case CardEffectTarget.AllyResources:
-                                playerAffectedResource = player.Resources;
-                                break;
+                        case CardEffectTarget.AllyResources:
+                            playerAffectedResource = player.Resources;
+                            break;
 
-                }
-            
-                int operationValue; 
-                operationValue = playerAffectedResource * effect.EffectValue / 100;
+                    }
 
-                
-                player.AffectPlayer(operationValue);
-                //Finisci la definizione dello spawn delle carte
+                    int operationValue;
+                    operationValue = playerAffectedResource * effect.EffectValue / 100;
+
+
+                    player.AffectPlayer(operationValue, effect.EffectTarget);
+                    //Finisci la definizione dello spawn delle carte
+                    break;
             }
-           
+
 
         }
 
-        
+
     }
     public void MoveCard(Card card, bool localPlayerMove, Card[] targetCards)
     {
 
 
-        
+
         int targetIndex = 0;
         foreach (var effect in card.Effects)
         {
@@ -285,35 +295,36 @@ public class Field : MonoBehaviour
 
                     //Flat Value Effect     
                     case CardEffectType.ValueIncrement:
-                        switch(effect.EffectTarget){
+                        switch (effect.EffectTarget)
+                        {
 
                             case CardEffectTarget.AllyPopulation:
                             case CardEffectTarget.AllyGold:
                             case CardEffectTarget.AllyResources:
-                            player.AffectPlayer(effect.EffectValue, effect.EffectTarget);
-                            break;
+                                player.AffectPlayer(effect.EffectValue, effect.EffectTarget);
+                                break;
                             case CardEffectTarget.EnemyGold:
                             case CardEffectTarget.EnemyPopulation:
                             case CardEffectTarget.EnemyResources:
-                            remotePlayer.AffectPlayer(effect.EffectValue, effect.EffectTarget - 5);
-                            break;
+                                remotePlayer.AffectPlayer(effect.EffectValue, effect.EffectTarget - 5);
+                                break;
                             case CardEffectTarget.AllyStructure:
                             case CardEffectTarget.AllyUnit:
                             case CardEffectTarget.EnemyStructure:
                             case CardEffectTarget.EnemyUnit:
-                            targetCards[targetIndex].AffectCard(effect.EffectValue);
-                         
-                            break;
+                                targetCards[targetIndex].AffectCard(effect.EffectValue);
+
+                                break;
 
 
 
                         }
-                    break;
+                        break;
                     case CardEffectType.PercentualIncrement:
 
                         //Percentual Effect
                         int playerAffectedResource = default(int);
-                        
+
                         switch (effect.EffectTarget)
                         {
 
@@ -341,22 +352,23 @@ public class Field : MonoBehaviour
                                 playerAffectedResource = player.Resources;
                                 break;
 
-                            
+
                             case CardEffectTarget.AllyStructure:
                             case CardEffectTarget.EnemyStructure:
                             case CardEffectTarget.AllyUnit:
                             case CardEffectTarget.EnemyUnit:
-                            int affectValue = targetCards[targetIndex].Absolute * effect.EffectValue / 100;
-                            
-                            card.AffectCard(affectValue);
-                            
-                            break;
+                                int affectValue = targetCards[targetIndex].Absolute * effect.EffectValue / 100;
+
+                                card.AffectCard(affectValue);
+
+                                break;
 
                         }
                         //Need refactoring, checks for target since effect without target is directed to the player 
-                        if(targetCards[targetIndex] == null){
-                            
-                            int operationValue; 
+                        if (targetCards[targetIndex] == null)
+                        {
+
+                            int operationValue;
                             operationValue = playerAffectedResource * effect.EffectValue / 100;
 
                             if ((int)effect.EffectTarget > 5)
@@ -367,7 +379,7 @@ public class Field : MonoBehaviour
                             {
                                 player.AffectPlayer(operationValue, effect.EffectTarget);
                             }
-                        
+
 
                         }
                         break;
@@ -391,13 +403,13 @@ public class Field : MonoBehaviour
                 }
 
             }
-            
+
             targetIndex++;
         }
         //Set eventual playerUse
         card.usage += 1;
     }
-    
+
 
 
 }

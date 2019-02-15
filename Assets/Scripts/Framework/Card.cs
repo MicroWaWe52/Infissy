@@ -44,20 +44,7 @@ public class Card {
     /// <summary>
     /// Inizializza la carta con dei campi basilari.
     /// </summary>
-    public void CardInitialize (){
-        Title = "Sample Title";
-        CardImage = null;
-        Description = "Sample Description";
-        ReferenceCity = CardReferenceCity.Other;
-        Rarity = CardRarity.Steel;
-        Friendly = true;
-
-        //TODO:EffectList
-        //Effect = CardTargetEffect.Ally.AllyGold;
-        Progress = false;
-        Type = CardType.Attack;
-
-    }
+  
 
 
     public void CardInitialize (string title,
@@ -79,7 +66,6 @@ public class Card {
        
         Effects = effect;
         Progress = progress;
-        CardType = type;
 
 
         switch(type){
@@ -95,7 +81,7 @@ public class Card {
             healable = false;
             destructible = false;
             targetable = false;
-
+                    break;
 
         }
     }
