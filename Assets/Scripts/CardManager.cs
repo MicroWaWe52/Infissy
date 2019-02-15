@@ -19,9 +19,6 @@ namespace Infissy.Framework
 
         }
 
-
-
-
         public Card FindCard(int idCard)
         {
 
@@ -225,6 +222,10 @@ namespace Infissy.Framework
 
         }
 
+        void InitPlayers()
+        {
+            
+        }
     }
 
 

@@ -5,9 +5,6 @@ using static Infissy.Properties.CardProperties;
 
 namespace Infissy.Framework
 {
-
-
-
     public class Card
     {
 
@@ -52,7 +49,6 @@ namespace Infissy.Framework
                                 string description,
                                 CardReferenceCity referenceCity,
                                 CardRarity rarity,
-
                                 List<CardEffect> effect,
                                 int progress,
                                 CardType type)
@@ -71,10 +67,11 @@ namespace Infissy.Framework
 
             switch (type)
             {
-
+                
                 //TODO:Struttura forse non curabile
                 case CardType.Structure:
                 case CardType.Attack:
+                   
                     healable = true;
                     destructible = true;
                     targetable = true;
